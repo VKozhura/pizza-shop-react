@@ -1,14 +1,14 @@
 import React from "react";
 import classNames from "classnames";
 
-const Button = (props) => {
+const Button = ({ className, children, outline }) => {
 	return (
 		<button
-			className={classNames("button", {
-				"button--outline": props.outline,
+			className={classNames("button", className, {
+				"button--outline": outline,
 			})}
 		>
-			{props.children}
+			{children}
 		</button>
 	);
 };

@@ -9,6 +9,7 @@ const pizzas = (state = initialState, action) => {
 			return {
 				...state,
 				pizzas: action.payload,
+				isLoaded: true,
 			};
 		default:
 			return state;

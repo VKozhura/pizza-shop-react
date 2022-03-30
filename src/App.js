@@ -5,27 +5,14 @@ import axios from "axios";
 import Header from "./components/Header";
 import Cart from "./pages/Cart";
 import Home from "./pages/Home";
-import { useSelector, useDispatch } from "react-redux";
-import { setPizzas } from "./redux/actions/pizzas";
 
 const App = () => {
-	const dispatch = useDispatch();
-	const { pizzas } = useSelector(({ pizzas }) => ({
-		pizzas: pizzas.pizzas,
-	}));
-
-	React.useEffect(() => {
-		axios
-			.get("http://localhost:3000/db.json")
-			.then((response) => dispatch(setPizzas(response.data.pizzas)));
-	}, []);
-
 	return (
 		<div className="wrapper">
 			<Header />
 			<div className="content">
 				<Routes>
-					<Route path="/" element={<Home pizzas={pizzas} />} />
+					<Route path="/" element={<Home />} />
 					<Route path="/cart" element={<Cart />} />
 				</Routes>
 			</div>

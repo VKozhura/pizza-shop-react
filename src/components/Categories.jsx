@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 // class Categories extends React.Component {
 // 	state = {
@@ -32,28 +33,21 @@ import React from "react";
 // 	}
 // }
 
-const Categories = ({ items, onClickItem }) => {
-	const [activeItem, setActiveItem] = React.useState(null);
-
-	const onSelectItem = (index) => {
-		setActiveItem(index);
-		onClickItem(index);
-	};
-
+const Categories = ({ activeCategory, items, onClickCategory }) => {
 	return (
 		<div className="categories">
 			<ul>
 				<li
-					className={activeItem === null ? "active" : undefined}
-					onClick={() => onSelectItem(null)}
+					className={activeCategory === null ? "active" : undefined}
+					onClick={() => onClickCategory(null)}
 				>
 					Все
 				</li>
 				{items &&
 					items.map((name, index) => (
 						<li
-							className={activeItem === index ? "active" : undefined}
-							onClick={() => onSelectItem(index)}
+							className={activeCategory === index ? "active" : undefined}
+							onClick={() => onClickCategory(index)}
 							key={`${name}_${index}`}
 						>
 							{name}
@@ -62,6 +56,12 @@ const Categories = ({ items, onClickItem }) => {
 			</ul>
 		</div>
 	);
+};
+
+Categories.propTypes = {
+	// activeCategory: PropTypes.oneOf([PropTypes.number, null]),
+	items: PropTypes.arrayOf(PropTypes.string).isRequired,
+	onClickCategory: PropTypes.func.isRequired,
 };
 
 export default Categories;

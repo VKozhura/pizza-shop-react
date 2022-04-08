@@ -8,11 +8,14 @@ import SortPopup from "../components/SortPopup";
 
 import { setCategory, setSortBy } from "../redux/actions/filters";
 import { fetchPizzas } from "../redux/actions/pizzas";
+import { addPizzaToCart } from "../redux/actions/cart";
 
 const Home = () => {
 	const dispatch = useDispatch();
 
 	const pizzas = useSelector(({ pizzas }) => pizzas.pizzas);
+	const cartPizzas = useSelector(({ cart }) => cart.pizzas);
+
 	const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded);
 	const { category, sortBy } = useSelector(({ filters }) => filters);
 
@@ -26,6 +29,11 @@ const Home = () => {
 
 	const onSelectSortBy = (type) => {
 		dispatch(setSortBy(type));
+	};
+
+	const handleAddPizzaToCart = (obj) => {
+		dispatch(addPizzaToCart(obj));
+		console.log(obj);
 	};
 
 	return (
@@ -49,7 +57,14 @@ const Home = () => {
 			<h2 className="content__title">Все пиццы</h2>
 			<div className="content__items">
 				{isLoaded
-					? pizzas.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)
+					? pizzas.map((pizza) => (
+							<PizzaBlock
+								onAddPizza={handleAddPizzaToCart}
+								key={pizza.id}
+								addedCount={cartPizzas[pizza.id] && cartPizzas[pizza.id].items.length}
+								{...pizza}
+							/>
+					  ))
 					: Array(12)
 							.fill(0)
 							.map((_, index) => <PizzaIsLoading key={index} />)}
